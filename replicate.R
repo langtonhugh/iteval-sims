@@ -50,11 +50,14 @@ plot.discr <- function(sr, m, columns, print.msd=TRUE, ylim=NULL, ...){
     apply(cbind(t(plot.data[ ,1, ]), t(plot.data[ ,2, ]), t(plot.data[ ,3, ]))[,columns],
           2, sd))
 
-  msd <- data.frame("cstat"=msd[,1], "se"=msd[,2],
+  msd <- data.frame("cstat"=msd[,1], "sd"=msd[,2],
                     upp=msd[,1]+1*msd[,2], low=msd[,1]-1*msd[,2],
-                    "statistic"=factor(rep(c("cforbendelta", "cforbeny0", "mbcb", "sample_ref", "population_ref"), 3),
-                                       levels = c("cforbendelta", "cforbeny0", "mbcb", "sample_ref", "population_ref")),
+                    "statistic"=factor(rep(c("cforbendelta", "cforbeny0", "mbcb", "cforbennew", "theta_d"), 3),
+                                       levels = c("cforbendelta", "cforbeny0", "mbcb", "cforbennew", "theta_d")),
                     "sample.size"=factor(rep(sample.sizes, each=5)))
+
+  #!#! order switched
+  msd$statistic <- factor(msd$statistic, levels=levels(msd$statistic)[c(1,4,2,3,5)])
 
   if(print.msd){
     print(msd)
@@ -124,7 +127,7 @@ plot.discr.estimand <- function(sr, m, columns, print.msd=TRUE, ylim=NULL, ...){
     apply(cbind(t(plot.data[ ,1, ]), t(plot.data[ ,2, ]), t(plot.data[ ,3, ]))[,columns],
           2, sd))
 
-  msd <- data.frame("cstat"=msd[,1], "se"=msd[,2],
+  msd <- data.frame("cstat"=msd[,1], "sd"=msd[,2],
                     upp=msd[,1]+1*msd[,2], low=msd[,1]-1*msd[,2],
                     "statistic"=factor(rep(c("cforbendelta", "cforbeny0", "mbcb", "cforbennew"), 3),
                                        levels = c("cforbendelta", "cforbeny0", "mbcb", "cforbennew")),
@@ -235,7 +238,7 @@ plot.cal <- function(sr, m, columns, print.msd=TRUE, ylim=NULL, ...){
     apply(plot.data[,columns], 2, function(x) mean(x, trim=.1)),
     apply(plot.data[,columns], 2, function(x) sd(Trim(x, trim=.1))))
 
-  msd <- data.frame("mean"=msd[,1], "se"=msd[,2],
+  msd <- data.frame("mean"=msd[,1], "sd"=msd[,2],
                     upp=msd[,1]+1*msd[,2], low=msd[,1]-1*msd[,2],
                     "statistic"=factor(rep(c("emp.int", "true.int", "emp.slope", "true.slope"), 3),
                                        levels=c("emp.int", "true.int", "emp.slope", "true.slope")),
@@ -308,7 +311,7 @@ plot.cal <- function(sr, m, columns, print.msd=TRUE, ylim=NULL, ...){
     apply(plot.data, 2, function(x) mean(x, trim=.1)),
     apply(plot.data, 2, function(x) sd(Trim(x, trim=.1))))
 
-  msd <- data.frame("mean"=msd[,1], "se"=msd[,2],
+  msd <- data.frame("mean"=msd[,1], "sd"=msd[,2],
                     upp=msd[,1]+1*msd[,2], low=msd[,1]-1*msd[,2],
                     "statistic"=factor(rep(c("int", "slope"), 3),
                                        levels=c("int", "slope")),
