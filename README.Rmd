@@ -22,7 +22,9 @@ This README file describes the contents of the **iteval-sims** repository and th
 
 First, `population.R` simulates the population data and stores the required representations in `population.RData`. Second, `sim.RData` performs the simulation study. Note that this script depends on R package **Hmisc**, **rms**, **MatchIt** and **iteval** and sources `support_functions.R` (which only contains helper functions specific to the simulation).
 
-Just running `sim.RData` for a number of simulation provides some replications to check against the pre-computed results in the `replicate` folder. Note that the simulations take a considerable amount of time, and that all results are available in pre-computed form. The `replicate.R` script provides exact replicates of the Figures and Tables in Hoogland et al. [yet to insert DOI]. Results have been checked on R version 4.2.0 and using the following package versions
+Just running `sim.RData` for a number of simulation provides some replications to check against the pre-computed results in the `replicate` folder. Note that the simulations take a considerable amount of time, and that all results are available in pre-computed form. The `replicate.R` script provides exact replicates of the Figures and Tables in Hoogland et al. [yet to insert DOI]. Results have been checked on R version 4.2.0 and using the following package versions.
+
+Supplementary simulations on model misspecification have also been added in the `sup` folder, where the `sim*.R` scripts can run the simulations, `replicate_suppl.R` again provides replication of key figures, and the `supple_sim_*` folders contain pre-computed simulation results.
 
 ```{r}
 library(Hmisc)

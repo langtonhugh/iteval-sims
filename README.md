@@ -32,7 +32,12 @@ replications to check against the pre-computed results in the
 of time, and that all results are available in pre-computed form. The
 `replicate.R` script provides exact replicates of the Figures and Tables
 in Hoogland et al. \[yet to insert DOI\]. Results have been checked on R
-version 4.2.0 and using the following package versions
+version 4.2.0 and using the following package versions.
+
+Supplementary simulations on model misspecification have also been added
+in the `sup` folder, where the `sim*.R` scripts can run the simulations,
+`replicate_suppl.R` again provides replication of key figures, and the
+`supple_sim_*` folders contain pre-computed simulation results.
 
 ``` r
 library(Hmisc)
@@ -61,23 +66,23 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] ggplot2_3.4.4 iteval_0.1.0  MatchIt_4.5.5 rms_6.7-1     Hmisc_5.1-1  
+#> [1] ggplot2_3.5.0 iteval_0.1.0  MatchIt_4.5.5 rms_6.7-1     Hmisc_5.1-1  
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] zoo_1.8-12         tidyselect_1.2.0   xfun_0.40          splines_4.2.0     
-#>  [5] lattice_0.20-45    colorspace_2.1-0   vctrs_0.6.4        generics_0.1.3    
-#>  [9] htmltools_0.5.6.1  yaml_2.3.7         base64enc_0.1-3    utf8_1.2.3        
-#> [13] survival_3.4-0     rlang_1.1.1        pillar_1.9.0       withr_2.5.2       
-#> [17] foreign_0.8-84     glue_1.6.2         multcomp_1.4-25    lifecycle_1.0.4   
-#> [21] stringr_1.5.1      MatrixModels_0.5-1 munsell_0.5.0      gtable_0.3.4      
-#> [25] mvtnorm_1.2-3      htmlwidgets_1.6.0  codetools_0.2-18   evaluate_0.23     
+#>  [1] zoo_1.8-12         tidyselect_1.2.0   xfun_0.42          splines_4.2.0     
+#>  [5] lattice_0.20-45    colorspace_2.1-0   vctrs_0.6.5        generics_0.1.3    
+#>  [9] htmltools_0.5.7    yaml_2.3.8         base64enc_0.1-3    utf8_1.2.4        
+#> [13] survival_3.4-0     rlang_1.1.3        pillar_1.9.0       withr_3.0.0       
+#> [17] foreign_0.8-84     glue_1.7.0         multcomp_1.4-25    lifecycle_1.0.4   
+#> [21] stringr_1.5.1      MatrixModels_0.5-3 munsell_0.5.0      gtable_0.3.4      
+#> [25] mvtnorm_1.2-3      htmlwidgets_1.6.4  codetools_0.2-18   evaluate_0.23     
 #> [29] knitr_1.45         fastmap_1.1.1      SparseM_1.81       quantreg_5.97     
-#> [33] fansi_1.0.5        htmlTable_2.4.2    Rcpp_1.0.11        TH.data_1.1-2     
-#> [37] scales_1.2.1       backports_1.4.1    checkmate_2.2.0    gridExtra_2.3     
-#> [41] digest_0.6.33      stringi_1.7.12     polspline_1.1.23   dplyr_1.1.3       
-#> [45] grid_4.2.0         cli_3.6.1          tools_4.2.0        sandwich_3.0-2    
+#> [33] fansi_1.0.6        htmlTable_2.4.2    Rcpp_1.0.12        TH.data_1.1-2     
+#> [37] scales_1.3.0       backports_1.4.1    checkmate_2.3.1    gridExtra_2.3     
+#> [41] digest_0.6.34      stringi_1.8.3      polspline_1.1.23   dplyr_1.1.4       
+#> [45] grid_4.2.0         cli_3.6.2          tools_4.2.0        sandwich_3.1-0    
 #> [49] magrittr_2.0.3     tibble_3.2.1       Formula_1.2-5      cluster_2.1.4     
-#> [53] pkgconfig_2.0.3    MASS_7.3-58.1      Matrix_1.5-4.1     data.table_1.14.8 
-#> [57] rmarkdown_2.25     rstudioapi_0.15.0  R6_2.5.1           rpart_4.1.19      
+#> [53] pkgconfig_2.0.3    MASS_7.3-58.1      Matrix_1.6-5       data.table_1.15.2 
+#> [57] rmarkdown_2.26     rstudioapi_0.15.0  R6_2.5.1           rpart_4.1.19      
 #> [61] nnet_7.3-18        nlme_3.1-163       compiler_4.2.0
 ```
