@@ -8,7 +8,7 @@
 
 The goal of the **iteval-sims** [GitHub](https://github.com/) repository
 is to enable replication of the simulation study in Hoogland et
-al. \[yet to insert DOI\]. The R scripts are not meant to be used for
+al. [DOI 10.1002/sim.10186](https://doi.org/10.1002/sim.10186). The R scripts are not meant to be used for
 other purposes and are not annotated. R package
 [**iteval**](https://github.com/jeroenhoogland/iteval) is available for
 application of the methods in practice and contains example
