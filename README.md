@@ -31,7 +31,7 @@ replications to check against the pre-computed results in the
 `replicate` folder. Note that the simulations take a considerable amount
 of time, and that all results are available in pre-computed form. The
 `replicate.R` script provides exact replicates of the Figures and Tables
-in Hoogland et al. \[yet to insert DOI\]. Results have been checked on R
+in Hoogland et al. [DOI 10.1002/sim.10186](https://doi.org/10.1002/sim.10186). Results have been checked on R
 version 4.2.0 and using the following package versions.
 
 Supplementary simulations on model misspecification have also been added
