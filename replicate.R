@@ -409,3 +409,6 @@ cal.list <- c("apparent.cal", "boot0.632.cal", "boot.opt.cal", "ext1.total.cal",
 xtable(t(sapply(cal.list, function(m){
   xx <- t(rmse.cal(sr, m, pl=F, digits=3))
 })))
+
+
+

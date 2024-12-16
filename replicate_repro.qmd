@@ -5,11 +5,9 @@ date: '`r format(Sys.Date(), "%B %d, %Y")`'
 format: pdf
 ---
 
-## Replicate.R script
+## Plots
 
-This loads in the simulations created during the codecheck after executing `population.R` and `sim.R`. Note that to reduce computation time for the codecheck, the number of simulations was reduced from 500 to 50.
-
-```{r, message = F, warning = F, fig.height = 5, echo = FALSE}
+```{r, message = F, warning = F, fig.height = 5, echo = FALSE, results = 'hide'}
 library(ggplot2)
 library(patchwork)
 library(stringr)
@@ -79,7 +77,7 @@ plot.discr <- function(sr, m, columns, print.msd=TRUE, ylim=NULL, ...){
   if(!is.null(ellipsis$ylab)) ylab <- ellipsis$ylab else ylab <- ""
   if(!is.null(ellipsis$title)) title <- ellipsis$title else title <- ""
 
-  ggplot(msd, aes(x=statistic, y=cstat, group=sample.size, colour=sample.size)) +
+ggplot(msd, aes(x=statistic, y=cstat, group=sample.size, colour=sample.size)) +
     geom_point(position=position_dodge(width=0.7)) +
     geom_errorbar(aes(x=statistic, ymax=upp, ymin=low), na.rm=TRUE, position=position_dodge(width=0.7)) +
     theme_bw() + ylim(ylim) +
@@ -95,6 +93,8 @@ plot.discr <- function(sr, m, columns, print.msd=TRUE, ylim=NULL, ...){
           axis.text.x=element_text(size=rel(1.3)),
           axis.text.y=element_text(size=rel(1.3)))
 }
+
+
 
 # Create a 3 + 2 version
 # make sure the ext1.app.discr results for cforbendelta and cforbennew are available in ext1.total.discr
@@ -214,13 +214,6 @@ rmse.discr <- function(sr, m,
   return(out)
 }
 
-xtable(t(sapply(discr.list, function(m){
-  xx <- t(rmse.discr(sr, m, ref="sample", pl=FALSE, digits=3))
-  c(paste(xx[1], xx[2], xx[3], sep=","), # cben
-    paste(xx[10], xx[11], xx[12], sep=","), # cben new
-    paste(xx[4], xx[5], xx[6], sep=","), # cben y0hat
-    paste(xx[7], xx[8], xx[9], sep=",")) # mbcb
-})))
 
 ###################
 ## Calibration ####
@@ -418,14 +411,60 @@ rmse.cal <- function(sr, m, pl=FALSE, digits=NULL, ...){
 cal.list <- c("apparent.cal", "boot0.632.cal", "boot.opt.cal", "ext1.total.cal",
               "ext2.total.cal")
 
+```
+
+### Table 1
+
+```{r tables, echo = FALSE}
+flextable::flextable(
+  as.data.frame(
+    t(sapply(discr.list, function(m){
+  xx <- t(rmse.discr(sr, m, ref="sample", pl=FALSE, digits=3))
+  c(paste(xx[1], xx[2], xx[3], sep=","), # cben
+    paste(xx[10], xx[11], xx[12], sep=","), # cben new
+    paste(xx[4], xx[5], xx[6], sep=","), # cben y0hat
+    paste(xx[7], xx[8], xx[9], sep=",")) # mbcb
+}))
+) %>% 
+  tibble::rownames_to_column(var = "Statistic"),
+cwidth = 1.25 
+)
+```
+
+### Table 2
+
+```{r table2, echo = FALSE}
+
 # rmse for the intercept estimates
-xtable(t(sapply(cal.list, function(m){
+flextable::flextable(
+  as.data.frame(
+(t(sapply(cal.list, function(m){
   xx <- t(rmse.cal(sr, m, pl=F, digits=3))
 })))
+) %>% 
+  tibble::rownames_to_column(var = "Statistic") %>% 
+  dplyr::mutate_if(is.numeric, round, 2),
+cwidth = 0.8
+)
+
 ```
 
 ## Session info
 
+### replicate.R
+
 ```{r}
 sessionInfo()
 ```
+
+### sim.R
+
+```{r}
+load("results/info.RData")
+
+info
+```
+
+### population.R and support_functions.R
+
+No packages loaded. Operating system and R version as above.
