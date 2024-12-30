@@ -70,7 +70,7 @@ The figures are not saved automatically. Because each figure is constructed with
 
 I have raised an issue on the repository^[https://github.com/jeroenhoogland/iteval-sims/issues/1#issue-2762859630] to propose fixing the `results` folder problem.
 
-The figures and tables could be saved automatically. As it stands, the scripts only output the results to either the R Console or the Plot window. This means that my reproduced figures differ slightly (e.g., dimensions, aspect ratio) from those in the paper, even though the results match. It also means that my tables are not labelled as per the paper, making it more difficult for readers to check the results. Rmarkdown, `flextable`, and `ggsave` might be nice additions to solve this.
+The figures and tables could be saved automatically. As it stands, the scripts only output the results to either the R Console or the Plot window. This means that my reproduced figures differ slightly (e.g., dimensions, aspect ratio) from those in the paper, even though the results match. It also means that the code produces tables that are not labelled as per the paper, making it more difficult for readers to check their outputs to the results in the paper. Rmarkdown, `flextable`, and `ggsave` might be nice additions to solve this.
 
 \clearpage
 
