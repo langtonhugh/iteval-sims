@@ -4,7 +4,7 @@ library(stringr)
 library(xtable)
 
 # folder where the simulation results are stored
-dir <- "replicate/"
+dir <- "results/" # changed for codecheck, to match sim.R script.
 files <- list.files(dir)
 files <- grep("ite*", files, value = TRUE)
 nsim <- length(files)
@@ -409,3 +409,6 @@ cal.list <- c("apparent.cal", "boot0.632.cal", "boot.opt.cal", "ext1.total.cal",
 xtable(t(sapply(cal.list, function(m){
   xx <- t(rmse.cal(sr, m, pl=F, digits=3))
 })))
+
+
+

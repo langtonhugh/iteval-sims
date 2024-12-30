@@ -55,7 +55,7 @@ val2.X <- X
 val2.ctrlX <- ctrlX
 val2.trtX <- trtX
 
-# marginal event rate controls and treated 
+# marginal event rate controls and treated
 # DGM1
 events <- list()
 events[[1]] <- mean(val1.out$y[val1.out$trt == 0])

@@ -1,0 +1,152 @@
+---
+output:
+  pdf_document:
+    toc: false
+    includes:
+       in_header: codecheck-preamble.sty
+    latex_engine: xelatex
+---
+
+```{r rsetup,eval=TRUE,include=FALSE}
+require("codecheck")
+require("knitr")
+require("rprojroot")
+require("yaml")
+require("xtable")
+require("tibble")
+require("readr")
+options(width = 60)
+opts_chunk$set(cache=FALSE)
+
+root = find_root("codecheck.yml")
+```
+
+```{r codecheck_logo, echo=FALSE,results='asis'}
+latex_codecheck_logo()
+```
+
+```{r amc, fig.align = 'center', out.width='40%', echo=FALSE}
+knitr::include_graphics("../img/Amsterdam_UMC_logo_with_text.png", )
+```
+
+\vspace{2em}
+
+```{r manifest, eval=TRUE, include=FALSE}
+metadata = codecheck_metadata(root)
+manifest = metadata$manifest
+
+dest_dir = file.path(root, "codecheck", "outputs")
+## Create the outputs directory if missing
+if ( !dir.exists(dest_dir) ) {
+  dir.create(dest_dir)
+}
+
+manifest_df = copy_manifest_files(root, metadata,
+                                  dest_dir, keep_full_path = FALSE,
+                                  overwrite = FALSE
+                                  )
+```
+
+---
+title: `r paste("CODECHECK certificate", metadata$certificate)`
+subtitle: `r codecheck:::as_latex_url(metadata$report)`
+---
+
+```{r summary_metadata, echo=FALSE, results='asis'}
+latex_summary_of_metadata(metadata)
+```
+
+```{r summary_manifest, echo=FALSE, results='asis'}
+latex_summary_of_manifest(metadata, manifest_df, root)
+```
+
+# Summary
+
+The three R scripts comprising this project were fairly straightforward to execute. I had some issues getting the simulation script (`sim.R`) running. It kept throwing an error but the specifics were masked by the usage of `doParallel` -- you only get the error about "cannot open connection" but the problem was actually that the `results` folder did not exist. Once this was created, the script executed fine. The results folder is not necessary if users are only interested in producing the plots and tables in `replicate.R`, because by default that script loads in pre-computed simulated data. The full simulation had to be run overnight (~6 hours) on a standard laptop.
+
+The figures are not saved automatically. Because each figure is constructed within a loop, I could not easily add in a `ggsave()` to save the figures using specific dimensions and DPI. The tables are generated automatically but the script appears to only generate the corresponding LaTeX syntax and print it to the Console. To actually do the codecheck, I copied the `replicate.R` code into a `.qmd` file and displayed the tables using `flextable`.
+
+# Recommendations
+
+I have raised an issue on the repository^[https://github.com/jeroenhoogland/iteval-sims/issues/1#issue-2762859630] to propose fixing the `results` folder problem.
+
+The figures and tables could be saved automatically. As it stands, the scripts only output the results to either the R Console or the Plot window. This means that my reproduced figures differ slightly (e.g., dimensions, aspect ratio) from those in the paper, even though the results match. It also means that my tables are not labelled as per the paper, making it more difficult for readers to check the results. Rmarkdown, `flextable`, and `ggsave` might be nice additions to solve this.
+
+\clearpage
+
+# Manifest files
+
+```{r, echo=FALSE, results="asis", width=100}
+for(i in c(1:nrow(manifest_df))) {
+  path <- manifest_df[i,"dest"]
+  if(stringr::str_ends(path, "(png|pdf|jpg|jpeg)")) {
+    # include graphics with knitr has to happen at top level in chunks, see https://github.com/yihui/knitr/issues/1260
+    # see also https://stackoverflow.com/questions/51268623/insert-images-using-knitrinclude-graphics-in-a-for-loop
+    # knitr::include_graphics(manifest_df[1, "dest"], error = TRUE)
+    # Therefore, generate Markdown code here:
+    cat("## ", basename(path), "\n\n")
+    cat("**Comment:** ", manifest_df[i,"comment"], "\n\n")
+    cat(paste0("![", "Test ", "](", path, ")\n"))
+  } else if (stringr::str_ends(path, "(Rout|txt)")) {
+    cat("## ", basename(path), "\n\n")
+    cat("\\scriptsize \n\n", "```txt\n")
+    cat(readLines(path), sep = "\n")
+    cat("\n\n``` \n\n", "\\normalsize \n\n")
+  } else if (stringr::str_ends(path, "csv")) {
+    cat("## ", basename(path), "\n\n", "Summary statistics of tabular data:", "\n\n")
+    cat("\\scriptsize \n\n", "```txt\n")
+    print(skimr::skim(read.csv(path)))
+    cat("\n\n``` \n\n", "\\normalsize \n\n")
+  } else {
+    cat("## ", basename(path), "\n\n")
+    cat("Cannot inlcude output file as figure.")
+  }
+  
+  cat("\\clearpage \n\n")
+}
+```
+
+\clearpage
+
+# Citing this document
+
+```{r, results='asis',echo=FALSE}
+cite_certificate(metadata)
+```
+
+# About CODECHECK
+
+This certificate confirms that the codechecker could independently
+reproduce the results of a computational analysis given the data and
+code from a third party.  A CODECHECK does not check whether the
+original computation analysis is correct.  However, as all materials
+required for the reproduction are freely available by following the
+links in this document, the reader can then study for themselves the
+code and data.
+
+
+# About this document
+
+This document was created using [R Markdown](https://rmarkdown.rstudio.com/) using the [`codecheck`](https://github.com/codecheckers/codecheck) R package.
+`make codecheck.pdf` will regenerate the report file.
+
+## Session info
+
+### replicate.R
+
+```{r}
+load("../replicate_script_info.RData")
+rep_info
+```
+
+### sim.R
+
+```{r}
+load("../results/info.RData")
+info
+```
+
+```{r, include=FALSE, eval=FALSE}
+# render this document in RStudio
+rmarkdown::render("codecheck.Rmd", output_format = "pdf_document") 
+```
