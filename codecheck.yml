@@ -38,5 +38,5 @@ summary: >
   R to generate and analyze simulated data in order to evaluate the prediction performance of individualized treatment effects.
 repository: https://github.com/langtonhugh/iteval-sims
 check_time: "2024-12-16 10:00:00"
-certificate: 2024-020
+certificate: 2024-024
 report: https://doi.org/10.5281/zenodo.14576035
